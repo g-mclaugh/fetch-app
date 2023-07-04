@@ -6,22 +6,22 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Information about the app
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Rather than implenting a proper auth guard, the app will redirect you to login if any request throws a 401.
 
-## Build
+Upon successful login, you will be brought to the search page, where you can see a list of dogs. You can sort by name, age, zip code, and breed.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Additionally, at the top, you can filter by breed as well.
 
-## Running unit tests
+Hovering over a dog will enlarge its picture to make it a little easier to see.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+You can select any number of dogs which will be added as chips underneath the `Match` button, which you can clear at any time. As long as one dog has been selected, you can click on the `Match` button and be shown a dialog window indicating your match. Clicking the "adopt" button will close the dialog and show a snackbar message.
 
-## Running end-to-end tests
+On smaller screen sizes, to conserve screen space, the age and zip code columns go away. The app functions as normal.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Not included
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Full responsiveness (there is not a separate template displayed per device size)
+- Unit testing (not enough time, also not my strong suit)
+- API error handling (not enough time, but more than happy to discuss and show on the phone screen how I would add error handling to improve the app)

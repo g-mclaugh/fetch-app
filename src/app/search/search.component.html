@@ -1,0 +1,74 @@
+<div class="search-wrapper">
+  <mat-toolbar color="primary">
+    <span>FETCH</span>
+    <span class="spacer"></span>
+    <button mat-flat-button color="accent" (click)="logout()">Logout</button>
+  </mat-toolbar>
+  <div class="search-header">
+    <div class="explainer">
+      <h1>Find a dog!</h1>
+      <p>Search through our database of dogs who are available for adoption. You can sort by name, age, zip code, or
+        breed, and you can filter by specific breed as well. When you see a dog that you think could be a great fit for
+        you, select it! When you're done searching, hit the "Match" button to find the furry friend that would be the
+        best fit for you.</p>
+    </div>
+    <div class="match-section">
+      <button mat-flat-button color="primary" [disabled]="selectedDogs.selected.length === 0"
+        (click)="match()">Match</button>
+      <div class="chips">
+        <mat-chip-listbox class="mat-mdc-chip-set-stacked">
+          <mat-chip-option *ngFor="let dog of selectedDogs.selected" (removed)="deselectDog(dog)">{{ dog.name }}
+            ({{dog.breed }})<button matChipRemove><mat-icon>cancel</mat-icon></button></mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+    </div>
+    <form class="breed-form">
+      <mat-form-field>
+        <mat-label>Filter by breed</mat-label>
+        <mat-icon matPrefix>filter_list</mat-icon>
+        <mat-select [formControl]="breedControl" multiple="">
+          <mat-option *ngFor="let breed of allBreeds" [value]="breed">{{ breed }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="search-content">
+    <table mat-table [dataSource]="dogs$ | async" matSort [matSortDirection]="sortDirection"
+      [matSortActive]="sortActive" (matSortChange)="sortEvent($event)" matSortDisableClear>
+
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>Select</th>
+        <td mat-cell *matCellDef="let dog">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectedDogs.toggle(dog) : null"
+            [checked]="selectedDogs.isSelected(dog)"></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="img">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let dog"><img [src]="dog.img"></td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let dog">{{ dog.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Age</th>
+        <td mat-cell *matCellDef="let dog">{{ dog.age }}</td>
+      </ng-container>
+      <ng-container matColumnDef="zip_code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Zip Code</th>
+        <td mat-cell *matCellDef="let dog">{{ dog.zip_code }}</td>
+      </ng-container>
+      <ng-container matColumnDef="breed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Breed</th>
+        <td mat-cell *matCellDef="let dog">{{ dog.breed }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons [length]="total" [pageSize]="pageSize"
+      [pageIndex]="pageIndex" (page)="pageEvent($event)"></mat-paginator>
+  </div>
+</div>

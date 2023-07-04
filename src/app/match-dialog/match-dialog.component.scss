@@ -1,0 +1,14 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  h1,
+  .info {
+    text-align: center;
+    color: black;
+  }
+
+  img {
+    min-width: min(400px, 70vw);
+    min-height: min (400px, 70vw);
+  }
+}
